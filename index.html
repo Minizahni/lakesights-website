@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lakesights – Mehr Wirkung aus Ihren Daten</title>
+  <meta name="description" content="Lakesights hilft Ihnen, Daten und KI gezielt einzusetzen – für bessere Entscheidungen, höhere Produktivität und nachhaltiges Wachstum.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --brown-dark: #3d2e1e;
+      --brown-medium: #7a6352;
+      --brown-muted: #9a8979;
+      --brown-light: #c4b5a4;
+      --warm-bg: #f0ebe4;
+      --warm-bg-alt: #e8e1d8;
+      --white: #ffffff;
+      --accent: #3d7a5a;
+      --accent-light: #e2f0e8;
+      --accent-hover: #2e6346;
+      --font: 'Albert Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --max-w: 1100px;
+      --section-py: 110px;
+      --card-radius: 14px;
+      --card-border: 1px solid rgba(0,0,0,0.06);
+      --card-shadow: 0 1px 4px rgba(60,46,30,0.05);
+      --card-shadow-hover: 0 12px 36px rgba(60,46,30,0.1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font); color: var(--brown-dark);
+      background: var(--warm-bg); line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── RIBBON NAV ── */
+    .ribbon {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 14px 40px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .ribbon.scrolled {
+      background: rgba(240,235,228,0.82);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 2px 20px rgba(60,46,30,0.07);
+    }
+    .ribbon-inner { max-width: var(--max-w); margin: 0 auto; }
+    .ribbon-bar {
+      display: flex; align-items: center;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-radius: 50px; padding: 6px 8px;
+      box-shadow: 0 1px 12px rgba(60,46,30,0.08);
+    }
+    .ribbon-logo {
+      font-size: 1.3rem; font-weight: 700; color: var(--brown-dark);
+      text-decoration: none; letter-spacing: -0.03em;
+      padding: 8px 24px 8px 20px; white-space: nowrap;
+      border-right: 1px solid var(--warm-bg-alt); margin-right: 8px;
+    }
+    .ribbon-links { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+    .ribbon-link {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--brown-medium);
+      text-decoration: none; padding: 10px 20px;
+      border-radius: 40px; transition: all 0.2s; white-space: nowrap;
+    }
+    .ribbon-link:hover { color: var(--brown-dark); background: rgba(240,235,228,0.7); }
+    .ribbon-link.active { background: var(--accent-light); color: var(--accent); }
+
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 26px; height: 18px; position: relative; z-index: 200;
+      margin-left: auto; margin-right: 8px;
+    }
+    .hamburger span {
+      display: block; width: 100%; height: 2px; background: var(--brown-dark);
+      position: absolute; left: 0; transition: 0.3s; border-radius: 2px;
+    }
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 8px; }
+    .hamburger span:nth-child(3) { top: 16px; }
+    .hamburger.active span:nth-child(1) { top: 8px; transform: rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { top: 8px; transform: rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--warm-bg); z-index: 150;
+      flex-direction: column; justify-content: center; align-items: center; gap: 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1.1rem; font-weight: 600; color: var(--brown-dark);
+      text-decoration: none; padding: 12px 32px; border-radius: 40px;
+      transition: background 0.2s;
+    }
+    .mobile-menu a:hover { background: var(--white); }
+
+    /* ── CONTAINER & SECTIONS ── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; }
+    section { padding: var(--section-py) 0; }
+    section:first-of-type { padding-top: 140px; }
+    .bg-warm { background: var(--warm-bg); }
+    .bg-white { background: var(--white); }
+
+    /* ── SHARED SECTION TYPOGRAPHY (identical everywhere) ── */
+    .section-label {
+      font-size: 0.73rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--brown-muted); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 24px; height: 1px;
+      background: var(--brown-light); flex-shrink: 0;
+    }
+    .section-title {
+      font-weight: 300; font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+      line-height: 1.18; letter-spacing: -0.02em; margin-bottom: 18px;
+    }
+    .section-title strong { font-weight: 700; }
+    .section-desc {
+      font-size: 1rem; line-height: 1.75; color: var(--brown-medium);
+      margin-bottom: 52px;
+    }
+    .section-desc-muted {
+      font-size: 1rem; line-height: 1.75; color: var(--brown-muted);
+      margin-bottom: 0;
+    }
+
+    /* ── SHARED CARD ── */
+    .card {
+      background: var(--white); border: var(--card-border);
+      border-radius: var(--card-radius); box-shadow: var(--card-shadow);
+      transition: transform 0.18s ease, box-shadow 0.25s ease;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--card-shadow-hover); }
+    .bg-white .card { background: var(--warm-bg); border-color: rgba(0,0,0,0.04); }
+
+    /* ── SOLUTIONS ── */
+    .solutions-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .sol-card {
+      background: var(--white); border: var(--card-border);
+      border-radius: var(--card-radius); box-shadow: var(--card-shadow);
+      position: relative; overflow: hidden; height: 300px;
+      cursor: pointer; transition: box-shadow 0.25s ease;
+    }
+    .sol-card:hover { box-shadow: var(--card-shadow-hover); }
+    .sol-card-front {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .sol-card-img { flex: 1; overflow: hidden; min-height: 0; }
+    .sol-card-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.4s ease;
+    }
+    .sol-card-label { padding: 14px 18px 16px; background: var(--warm-bg); flex-shrink: 0; height: 80px; overflow: hidden; }
+    .sol-num {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--brown-muted); display: block; margin-bottom: 3px;
+    }
+    .sol-card-label h3 { font-size: 0.88rem; font-weight: 700; line-height: 1.3; color: var(--brown-dark); }
+    .sol-card-back {
+      position: absolute; inset: 0; background: var(--warm-bg);
+      padding: 24px 20px; display: flex; flex-direction: column;
+      justify-content: flex-start; opacity: 0; transform: translateY(14px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .sol-card-back h3 { font-size: 0.95rem; font-weight: 700; line-height: 1.3; margin-bottom: 10px; color: var(--brown-dark); }
+    .sol-card-back p { font-size: 0.82rem; line-height: 1.65; color: var(--brown-medium); }
+    .sol-card:hover .sol-card-front { opacity: 0; transform: translateY(-8px); }
+    .sol-card:hover .sol-card-img img { transform: scale(1.04); }
+    .sol-card:hover .sol-card-back { opacity: 1; transform: translateY(0); }
+
+    /* ── INDUSTRY ── */
+    .industry-tabs {
+      display: flex; gap: 4px; margin-bottom: 44px;
+      border-bottom: 1px solid var(--warm-bg-alt); flex-wrap: wrap;
+    }
+    .industry-tab {
+      padding: 13px 26px; font-size: 0.82rem; font-weight: 600;
+      color: var(--brown-muted); background: none; border: none;
+      cursor: pointer; position: relative; transition: color 0.2s;
+      white-space: nowrap; letter-spacing: 0.02em;
+    }
+    .industry-tab::after {
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 2px; background: var(--brown-dark);
+      transform: scaleX(0); transition: transform 0.3s;
+    }
+    .industry-tab.active { color: var(--brown-dark); }
+    .industry-tab.active::after { transform: scaleX(1); }
+    .industry-tab:hover { color: var(--brown-dark); }
+    .industry-content { display: none; }
+    .industry-content.active { display: block; animation: fadeUp 0.4s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .industry-challenge {
+      background: var(--white); border: var(--card-border);
+      border-radius: var(--card-radius); box-shadow: var(--card-shadow);
+      padding: 32px 36px; margin-bottom: 28px;
+    }
+    .industry-challenge-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--brown-muted); margin-bottom: 10px;
+    }
+    .industry-challenge p { font-size: 1rem; line-height: 1.75; color: var(--brown-medium); }
+    .industry-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .industry-card { padding: 30px; }
+    .industry-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; line-height: 1.35; }
+    .industry-card p { font-size: 0.88rem; line-height: 1.7; color: var(--brown-medium); }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .about-text p { font-size: 1rem; line-height: 1.8; color: var(--brown-medium); margin-bottom: 20px; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-values { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .about-value { padding: 28px; }
+    .about-value h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .about-value p { font-size: 0.85rem; line-height: 1.65; color: var(--brown-medium); }
+
+    /* ── CONTACT ── */
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .contact-info-item { margin-bottom: 28px; }
+    .contact-info-item h4 {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--brown-muted); margin-bottom: 6px;
+    }
+    .contact-info-item p { font-size: 0.95rem; color: var(--brown-medium); line-height: 1.6; }
+    .contact-form { display: flex; flex-direction: column; gap: 18px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-label-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .form-group label { font-size: 0.78rem; font-weight: 500; color: var(--brown-medium); letter-spacing: 0.02em; }
+    .form-optional { font-size: 0.7rem; font-weight: 400; color: var(--brown-light); font-style: italic; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--white); border: 1px solid var(--warm-bg-alt);
+      border-radius: 10px; padding: 13px 16px;
+      color: var(--brown-dark); font-family: var(--font); font-size: 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s; outline: none; width: 100%;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--brown-light); }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(61,122,90,0.08);
+    }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: var(--white); color: var(--brown-dark); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      background: var(--accent); color: var(--white);
+      padding: 15px 36px; border-radius: 50px; border: none;
+      font-family: var(--font); font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, transform 0.15s; align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .form-privacy { font-size: 0.75rem; color: var(--brown-light); line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--white); border-top: 1px solid var(--warm-bg-alt); padding: 40px 0; }
+    .footer-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo { font-size: 1.15rem; font-weight: 700; color: var(--brown-dark); text-decoration: none; letter-spacing: -0.03em; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a { font-size: 0.8rem; color: var(--brown-muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--brown-dark); }
+    .footer-copy {
+      font-size: 0.75rem; color: var(--brown-light); width: 100%;
+      text-align: center; margin-top: 28px; padding-top: 28px;
+      border-top: 1px solid var(--warm-bg);
+    }
+
+    /* ── HERO IMAGE ── */
+    .hero-img {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(60,46,30,0.10);
+      margin-bottom: 44px;
+    }
+    .hero-img img {
+      width: 100%;
+      height: clamp(200px, 32vw, 460px);
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .solutions-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-wrapper { grid-template-columns: 1fr; gap: 44px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      :root { --section-py: 72px; }
+      .ribbon { padding: 10px 16px; }
+      .ribbon-links { display: none; }
+      .hamburger { display: block; }
+      .container { padding: 0 20px; }
+      section:first-of-type { padding-top: 100px; }
+      .form-row { grid-template-columns: 1fr; }
+      .industry-tab { padding: 11px 16px; font-size: 0.78rem; }
+      .industry-grid { grid-template-columns: 1fr; }
+      .about-values { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; padding: 0 20px; }
+      .footer-links { justify-content: center; }
+      .solution-card { padding: 28px; }
+      .hero-img { border-radius: 12px; margin-bottom: 32px; }
+      .hero-img img { height: 200px; }
+      .solutions-grid { grid-template-columns: repeat(2, 1fr); }
+      .sol-card { height: 260px; }
+      .sol-card-label h3 { font-size: 0.8rem; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .container { padding: 0 32px; }
+      .ribbon { padding: 12px 32px; }
+      .footer-inner { padding: 0 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="ribbon" id="ribbon">
+    <div class="ribbon-inner">
+      <div class="ribbon-bar">
+        <a href="#" class="ribbon-logo">Lakesights</a>
+        <button class="hamburger" id="hamburger" aria-label="Menü"><span></span><span></span><span></span></button>
+        <div class="ribbon-links" id="ribbonLinks">
+          <a href="#loesungen" class="ribbon-link">Lösungen</a>
+          <a href="#branchen" class="ribbon-link">Branchen</a>
+          <a href="#ueber-uns" class="ribbon-link">Über uns</a>
+          <a href="#kontakt" class="ribbon-link active">Kontakt</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#loesungen">Lösungen</a>
+    <a href="#branchen">Branchen</a>
+    <a href="#ueber-uns">Über uns</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+
+  <!-- 1. INTRO (warm bg) -->
+  <section class="bg-warm" id="hero">
+    <div class="container">
+      <div class="section-label">Daten & KI Beratung</div>
+      <h2 class="section-title">Mehr <strong>Wirkung</strong> aus Ihren Daten</h2>
+      <p class="section-desc">Wir helfen Ihnen, Daten und KI gezielt einzusetzen – für bessere Entscheidungen, höhere Produktivität und nachhaltiges Wachstum.</p>
+      <div class="hero-img">
+        <img src="Background_Data.jpg" alt="Daten und KI im Einsatz" loading="lazy">
+      </div>
+      <p class="section-desc-muted">Viele Organisationen verfügen über umfangreiche Datenbestände, nutzen deren Potenzial jedoch nur begrenzt. Wir schaffen Klarheit, Priorität und Umsetzungsfähigkeit, damit Daten und KI konkret auf Ihre Geschäftsziele einzahlen.</p>
+    </div>
+  </section>
+
+  <!-- 2. LÖSUNGEN (white) -->
+  <section class="bg-white" id="loesungen">
+    <div class="container">
+      <div class="section-label">Unsere Lösungen</div>
+      <h2 class="section-title">Die benötigten <strong>Grundlagen</strong> für datengetriebene Wertschöpfung</h2>
+      <p class="section-desc">Vier aufeinander abgestimmte Bausteine, die Ihre Organisation befähigen, Daten und KI systematisch und wirkungsvoll einzusetzen.</p>
+
+      <div class="solutions-grid">
+        <div class="sol-card">
+          <div class="sol-card-front">
+            <div class="sol-card-img"><img src="Background_Website.png" alt="Daten- & KI-Strategie" loading="lazy"></div>
+            <div class="sol-card-label"><span class="sol-num">01</span><h3>Daten- & KI-Strategie</h3></div>
+          </div>
+          <div class="sol-card-back">
+            <span class="sol-num">01</span>
+            <h3>Daten- & KI-Strategie</h3>
+            <p>Eine klare Daten- & KI-Strategie verbindet Ihre Geschäftsziele mit konkreten Maßnahmen – mit definiertem Zielbild, priorisierten Initiativen und klaren Governance-Strukturen.</p>
+          </div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-card-front">
+            <div class="sol-card-img"><img src="Background_Website.png" alt="Data Intelligence Platform" loading="lazy"></div>
+            <div class="sol-card-label"><span class="sol-num">02</span><h3>Data Intelligence Platform</h3></div>
+          </div>
+          <div class="sol-card-back">
+            <span class="sol-num">02</span>
+            <h3>Data Intelligence Platform</h3>
+            <p>Eine zentrale Datenplattform führt operative und analytische Daten zusammen – als zuverlässige Basis für Reporting, Analytics und KI-Anwendungen.</p>
+          </div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-card-front">
+            <div class="sol-card-img"><img src="Background_Website.png" alt="KI-gestützte Business Intelligence" loading="lazy"></div>
+            <div class="sol-card-label"><span class="sol-num">03</span><h3>KI-gestützte Business Intelligence</h3></div>
+          </div>
+          <div class="sol-card-back">
+            <span class="sol-num">03</span>
+            <h3>KI-gestützte Business Intelligence</h3>
+            <p>KI erweitert klassische Reports um automatisierte Treiber-Analysen, Mustererkennung und natürlichsprachliche Abfragen – für schnellere, fundiertere Entscheidungen.</p>
+          </div>
+        </div>
+        <div class="sol-card">
+          <div class="sol-card-front">
+            <div class="sol-card-img"><img src="Background_Website.png" alt="KI-Agenten" loading="lazy"></div>
+            <div class="sol-card-label"><span class="sol-num">04</span><h3>KI-Agenten</h3></div>
+          </div>
+          <div class="sol-card-back">
+            <span class="sol-num">04</span>
+            <h3>KI-Agenten</h3>
+            <p>KI-Agenten automatisieren definierte Aufgaben entlang Ihrer Prozesse – von der kontinuierlichen Datenanalyse bis zur regelbasierten Auslösung von Aktionen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BRANCHEN (warm bg) -->
+  <section class="bg-warm" id="branchen">
+    <div class="container">
+      <div class="section-label">Branchenrelevanz</div>
+      <h2 class="section-title">Wie Daten & KI gezielt auf <strong>branchenspezifische Herausforderungen</strong> einzahlen</h2>
+      <p class="section-desc">Wir verstehen die spezifischen Anforderungen Ihrer Branche und entwickeln datengetriebene Lösungen, die direkt auf Ihre Geschäftsziele einzahlen.</p>
+
+      <div class="industry-tabs">
+        <button class="industry-tab active" data-tab="fertigung">Industrielle Fertigung</button>
+        <button class="industry-tab" data-tab="bau">Bauwesen</button>
+        <button class="industry-tab" data-tab="logistik">Transport & Logistik</button>
+      </div>
+
+      <div class="industry-content active" id="tab-fertigung">
+        <div class="industry-challenge">
+          <div class="industry-challenge-label">Kernherausforderung</div>
+          <p>Komplexe Produktionsprozesse, volatile Lieferketten und hoher Kostendruck erschweren eine präzise Steuerung von Effizienz, Qualität und Margen.</p>
+        </div>
+        <div class="industry-grid">
+          <div class="card industry-card"><h4>Komplexität beherrschbar machen</h4><p>Durchgängige Transparenz über Produktions-, Material- und Qualitätsdaten schafft die Grundlage, Engpässe und Ineffizienzen systematisch zu identifizieren.</p></div>
+          <div class="card industry-card"><h4>Kosten- und Margendruck reduzieren</h4><p>Datenbasierte Analysen zu Ausschuss, Rüstzeiten und Produktprofitabilität ermöglichen gezielte Maßnahmen zur Ergebnisverbesserung.</p></div>
+          <div class="card industry-card"><h4>Lieferfähigkeit absichern</h4><p>Prognosemodelle unterstützen eine stabilere Planung von Kapazitäten und Materialverfügbarkeit.</p></div>
+          <div class="card industry-card"><h4>Qualitätsrisiken minimieren</h4><p>KI-gestützte Mustererkennung hilft, Abweichungen frühzeitig zu erkennen und Folgekosten zu vermeiden.</p></div>
+        </div>
+      </div>
+
+      <div class="industry-content" id="tab-bau">
+        <div class="industry-challenge">
+          <div class="industry-challenge-label">Kernherausforderung</div>
+          <p>Projektbasierte Wertschöpfung, enge Kalkulationen und dynamische Rahmenbedingungen erhöhen das Risiko von Kostenüberschreitungen und Terminabweichungen.</p>
+        </div>
+        <div class="industry-grid">
+          <div class="card industry-card"><h4>Projekttransparenz herstellen</h4><p>Zentrale Datenmodelle verbinden kaufmännische und operative Informationen und ermöglichen eine konsistente Steuerung von Budget, Fortschritt und Risiken.</p></div>
+          <div class="card industry-card"><h4>Abweichungen frühzeitig erkennen</h4><p>Analytische Auswertungen machen Kosten- und Terminrisiken sichtbar, bevor sie die Marge gefährden.</p></div>
+          <div class="card industry-card"><h4>Ressourceneinsatz optimieren</h4><p>Datenbasierte Planung von Personal, Maschinen und Material reduziert Reibungsverluste zwischen Gewerken.</p></div>
+          <div class="card industry-card"><h4>Finanzielle Stabilität stärken</h4><p>Verbesserte Prognosen zu Projekt- und Liquiditätsentwicklung erhöhen Planungssicherheit.</p></div>
+        </div>
+      </div>
+
+      <div class="industry-content" id="tab-logistik">
+        <div class="industry-challenge">
+          <div class="industry-challenge-label">Kernherausforderung</div>
+          <p>Schwankende Nachfrage, steigende Kosten und hohe Serviceanforderungen erfordern maximale Effizienz bei gleichzeitig hoher Reaktionsfähigkeit.</p>
+        </div>
+        <div class="industry-grid">
+          <div class="card industry-card"><h4>Operative Steuerung verbessern</h4><p>Echtzeit-Transparenz über Auslastung, Laufzeiten und Servicelevel schafft die Basis für belastbare Entscheidungen.</p></div>
+          <div class="card industry-card"><h4>Kostenvolatilität begegnen</h4><p>Optimierte Routen-, Kapazitäts- und Tourenplanung reduziert unnötige Kilometer und Leerkapazitäten.</p></div>
+          <div class="card industry-card"><h4>Planungssicherheit erhöhen</h4><p>Prognosemodelle unterstützen eine präzisere Bedarfs- und Kapazitätsplanung.</p></div>
+          <div class="card industry-card"><h4>Servicequalität absichern</h4><p>Datenbasierte Performance-Analysen helfen, Lieferabweichungen systematisch zu reduzieren.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ÜBER UNS (white) -->
+  <section class="bg-white" id="ueber-uns">
+    <div class="container">
+      <div class="section-label">Über uns</div>
+      <h2 class="section-title">Wir machen <strong>Daten zum Wettbewerbsvorteil</strong></h2>
+      <p class="section-desc">Lakesights ist eine spezialisierte Beratung für Daten und Künstliche Intelligenz – mit dem Fokus auf messbare Wirkung.</p>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>Wir unterstützen mittelständische Unternehmen und Konzerne dabei, ihre Daten gezielt zu nutzen – von der strategischen Ausrichtung bis zur technischen Umsetzung. Unser Ansatz verbindet tiefes Branchenverständnis mit technologischer Kompetenz.</p>
+          <p>Dabei setzen wir auf pragmatische Lösungen, die sich in bestehende Strukturen einfügen und schnell Ergebnisse liefern. Keine Theorie um der Theorie willen, sondern Beratung, die in der Praxis funktioniert.</p>
+          <p>Unser Team vereint Erfahrung aus Unternehmensberatung, Data Engineering und KI-Entwicklung. Wir arbeiten eng mit Ihren Fachbereichen zusammen und stellen sicher, dass jede Initiative auf konkrete Geschäftsziele einzahlt.</p>
+        </div>
+        <div class="about-values">
+          <div class="card about-value"><h4>Wirkungsorientiert</h4><p>Jedes Projekt beginnt mit der Frage: Welchen messbaren Beitrag leistet diese Initiative zum Geschäftsergebnis?</p></div>
+          <div class="card about-value"><h4>Pragmatisch</h4><p>Wir liefern umsetzbare Lösungen statt umfangreicher Konzeptpapiere. Schnelle Ergebnisse schaffen Vertrauen und Momentum.</p></div>
+          <div class="card about-value"><h4>Partnerschaftlich</h4><p>Wir arbeiten auf Augenhöhe mit Ihren Teams und bauen interne Kompetenzen auf, die über das Projekt hinaus wirken.</p></div>
+          <div class="card about-value"><h4>Technologisch fundiert</h4><p>Unsere Empfehlungen basieren auf echtem technischen Verständnis – von Datenarchitektur bis zu modernen KI-Verfahren.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. KONTAKT (warm bg) -->
+  <section class="bg-warm" id="kontakt">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div>
+          <div class="section-label">Kontakt</div>
+          <h2 class="section-title">Lassen Sie uns über Ihre <strong>Daten</strong> sprechen</h2>
+          <p class="section-desc">Erzählen Sie uns von Ihren Herausforderungen. Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+          <div class="contact-info-item"><h4>E-Mail</h4><p>kontakt@lakesights.com</p></div>
+          <div class="contact-info-item"><h4>Standort</h4><p>München, Deutschland</p></div>
+        </div>
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact">
+          <p style="display:none"><label>Nicht ausfüllen: <input name="bot-field"></label></p>
+          <div class="form-row">
+            <div class="form-group"><label for="vorname">Vorname *</label><input type="text" id="vorname" name="vorname" placeholder="Max" required></div>
+            <div class="form-group"><label for="nachname">Nachname *</label><input type="text" id="nachname" name="nachname" placeholder="Mustermann" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="email">E-Mail *</label><input type="email" id="email" name="email" placeholder="max@unternehmen.de" required></div>
+            <div class="form-group"><div class="form-label-row"><label for="unternehmen">Unternehmen</label><span class="form-optional">Optional</span></div><input type="text" id="unternehmen" name="unternehmen" placeholder="Ihr Unternehmen"></div>
+          </div>
+          <div class="form-group"><div class="form-label-row"><label for="interesse">Wofür interessieren Sie sich?</label><span class="form-optional">Optional</span></div><select id="interesse" name="interesse"><option value="">Bitte wählen</option><option value="strategie">Daten- & KI-Strategie</option><option value="plattform">Data Intelligence Platform</option><option value="bi">KI-gestützte Business Intelligence</option><option value="agenten">KI-Agenten</option><option value="sonstiges">Sonstiges</option></select></div>
+          <div class="form-group"><div class="form-label-row"><label for="nachricht">Ihre Nachricht</label><span class="form-optional">Optional</span></div><textarea id="nachricht" name="nachricht" placeholder="Beschreiben Sie kurz Ihre aktuelle Herausforderung oder Ihr Anliegen..."></textarea></div>
+          <button type="submit" class="form-submit">Nachricht senden →</button>
+          <p class="form-privacy">Ihre Daten werden vertraulich behandelt und ausschließlich zur Kontaktaufnahme verwendet.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="#" class="footer-logo">Lakesights</a>
+      <div class="footer-links"><a href="#kontakt">Kontakt</a><a href="#">Impressum</a><a href="#">Datenschutz</a></div>
+      <p class="footer-copy">© 2025 Lakesights. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    var ribbon = document.getElementById('ribbon');
+    window.addEventListener('scroll', function() {
+      ribbon.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Mobile menu
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('open');
+    });
+    var mobileLinks = mobileMenu.querySelectorAll('a');
+    for (var i = 0; i < mobileLinks.length; i++) {
+      mobileLinks[i].addEventListener('click', function() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('open');
+      });
+    }
+
+    // Active ribbon link on scroll
+    var sects = document.querySelectorAll('section[id]');
+    var rLinks = document.querySelectorAll('.ribbon-link');
+    window.addEventListener('scroll', function() {
+      var current = '';
+      for (var i = 0; i < sects.length; i++) {
+        if (window.scrollY >= sects[i].offsetTop - 120) current = sects[i].getAttribute('id');
+      }
+      for (var i = 0; i < rLinks.length; i++) {
+        rLinks[i].classList.remove('active');
+        if (rLinks[i].getAttribute('href').replace('#','') === current) rLinks[i].classList.add('active');
+      }
+    });
+
+    // Industry tabs
+    var tabs = document.querySelectorAll('.industry-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].addEventListener('click', function() {
+        for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+        var contents = document.querySelectorAll('.industry-content');
+        for (var j = 0; j < contents.length; j++) contents[j].classList.remove('active');
+        this.classList.add('active');
+        document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+      });
+    }
+  </script>
+
+</body>
+</html>
