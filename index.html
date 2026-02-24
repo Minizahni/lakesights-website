@@ -279,6 +279,23 @@
       border-top: 1px solid var(--warm-bg);
     }
 
+    /* ── LOGISTIK HERO ── */
+    .logistik-hero {
+      position: relative; border-radius: var(--card-radius);
+      overflow: hidden; margin-bottom: 28px; height: 280px;
+    }
+    .logistik-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .logistik-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(170deg, rgba(20,14,8,0.00) 0%, rgba(20,14,8,0.32) 55%, rgba(20,14,8,0.58) 100%);
+      padding: 28px 36px; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .logistik-hero-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.92); margin-bottom: 10px;
+    }
+    .logistik-hero-text { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.92); max-width: 640px; }
+
     /* ── HERO IMAGE ── */
     .hero-img {
       border-radius: 16px;
@@ -318,6 +335,9 @@
       .solutions-grid { grid-template-columns: repeat(2, 1fr); }
       .sol-card { height: 260px; }
       .sol-card-label h3 { font-size: 0.8rem; }
+      .logistik-hero { height: 210px; }
+      .logistik-hero-overlay { padding: 20px 20px; }
+      .logistik-hero-text { font-size: 0.88rem; }
     }
     @media (min-width: 769px) and (max-width: 1024px) {
       .container { padding: 0 32px; }
@@ -373,7 +393,7 @@
       <div class="solutions-grid">
         <div class="sol-card">
           <div class="sol-card-front">
-            <div class="sol-card-img"><img src="Background_Website.png" alt="Daten- & KI-Strategie" loading="lazy"></div>
+            <div class="sol-card-img"><img src="data_strategy.jpg" alt="Daten- & KI-Strategie" loading="lazy"></div>
             <div class="sol-card-label"><span class="sol-num">01</span><h3>Daten- & KI-Strategie</h3></div>
           </div>
           <div class="sol-card-back">
@@ -384,7 +404,7 @@
         </div>
         <div class="sol-card">
           <div class="sol-card-front">
-            <div class="sol-card-img"><img src="Background_Website.png" alt="Data Intelligence Platform" loading="lazy"></div>
+            <div class="sol-card-img"><img src="data_intelligence_platform.jpg" alt="Data Intelligence Platform" loading="lazy"></div>
             <div class="sol-card-label"><span class="sol-num">02</span><h3>Data Intelligence Platform</h3></div>
           </div>
           <div class="sol-card-back">
@@ -395,7 +415,7 @@
         </div>
         <div class="sol-card">
           <div class="sol-card-front">
-            <div class="sol-card-img"><img src="Background_Website.png" alt="KI-gestützte Business Intelligence" loading="lazy"></div>
+            <div class="sol-card-img"><img src="business_intelligence.jpg" alt="KI-gestützte Business Intelligence" loading="lazy"></div>
             <div class="sol-card-label"><span class="sol-num">03</span><h3>KI-gestützte Business Intelligence</h3></div>
           </div>
           <div class="sol-card-back">
@@ -406,7 +426,7 @@
         </div>
         <div class="sol-card">
           <div class="sol-card-front">
-            <div class="sol-card-img"><img src="Background_Website.png" alt="KI-Agenten" loading="lazy"></div>
+            <div class="sol-card-img"><img src="ki_agenten.jpg" alt="KI-Agenten" loading="lazy"></div>
             <div class="sol-card-label"><span class="sol-num">04</span><h3>KI-Agenten</h3></div>
           </div>
           <div class="sol-card-back">
@@ -459,9 +479,12 @@
       </div>
 
       <div class="industry-content" id="tab-logistik">
-        <div class="industry-challenge">
-          <div class="industry-challenge-label">Kernherausforderung</div>
-          <p>Schwankende Nachfrage, steigende Kosten und hohe Serviceanforderungen erfordern maximale Effizienz bei gleichzeitig hoher Reaktionsfähigkeit.</p>
+        <div class="logistik-hero">
+          <img src="transport_und_logistik.png" alt="Transport & Logistik" loading="lazy">
+          <div class="logistik-hero-overlay">
+            <div class="logistik-hero-label">Kernherausforderung</div>
+            <p class="logistik-hero-text">Schwankende Nachfrage, steigende Kosten und hohe Serviceanforderungen erfordern maximale Effizienz bei gleichzeitig hoher Reaktionsfähigkeit.</p>
+          </div>
         </div>
         <div class="industry-grid">
           <div class="card industry-card"><h4>Operative Steuerung verbessern</h4><p>Echtzeit-Transparenz über Auslastung, Laufzeiten und Servicelevel schafft die Basis für belastbare Entscheidungen.</p></div>
