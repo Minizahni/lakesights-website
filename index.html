@@ -261,6 +261,14 @@
     }
     .form-submit:hover { background: var(--accent-hover); transform: translateY(-1px); }
     .form-privacy { font-size: 0.75rem; color: var(--brown-light); line-height: 1.5; }
+    .form-success {
+      display: none; text-align: center; padding: 48px 24px;
+      animation: fadeUp 0.4s ease;
+    }
+    .form-success svg { color: var(--accent); margin-bottom: 16px; }
+    .form-success h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+    .form-success p { font-size: 0.95rem; color: var(--brown-medium); line-height: 1.6; }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
     /* ── FOOTER ── */
     .footer { background: var(--white); border-top: 1px solid var(--warm-bg-alt); padding: 40px 0; }
@@ -536,7 +544,7 @@
           <div class="contact-info-item"><h4>E-Mail</h4><p>kontakt@lakesights.com</p></div>
           <div class="contact-info-item"><h4>Telefon</h4><p>+49 151 28001234</p></div>
         </div>
-        <form class="contact-form" method="POST" action="https://api.staticforms.dev/submit">
+        <form class="contact-form" id="contactForm">
           <input type="hidden" name="apiKey" value="sf_aajbifckmgg6i7ag3a3lfn4l">
 
           <div class="form-row">
@@ -554,6 +562,11 @@
           <button type="submit" class="form-submit">Nachricht senden →</button>
           <p class="form-privacy">Ihre Daten werden vertraulich behandelt und ausschließlich zur Kontaktaufnahme verwendet.</p>
         </form>
+        <div class="form-success" id="formSuccess">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="32" height="32"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+          <h3>Vielen Dank für Ihre Nachricht!</h3>
+          <p>Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -605,6 +618,33 @@
 
     // Dynamic copyright year
     document.getElementById('copy-year').textContent = new Date().getFullYear();
+
+    // Contact form (AJAX submit)
+    var contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = contactForm.querySelector('.form-submit');
+      btn.disabled = true;
+      btn.textContent = 'Wird gesendet...';
+      fetch('https://api.staticforms.dev/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(contactForm)))
+      }).then(function(res) {
+        if (res.ok) {
+          contactForm.style.display = 'none';
+          document.getElementById('formSuccess').style.display = 'block';
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Nachricht senden \u2192';
+          alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+        }
+      }).catch(function() {
+        btn.disabled = false;
+        btn.textContent = 'Nachricht senden \u2192';
+        alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+      });
+    });
 
     // Industry tabs
     var tabs = document.querySelectorAll('.industry-tab');
